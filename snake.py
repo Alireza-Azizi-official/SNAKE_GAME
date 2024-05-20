@@ -30,7 +30,7 @@ def your_score(score):
 
 def snake(block, snake_list):
     for x in snake_list:
-        pygame.draw.rect(display, red, [x[0], x[1], block, block]) 
+        pygame.draw.circle(display, black, [x[0], x[1], block, block]) 
 
 def message(msg, color):
     mesg = font.render(msg, True, color)
