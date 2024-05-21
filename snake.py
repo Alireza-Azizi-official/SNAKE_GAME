@@ -19,18 +19,18 @@ pygame.display.set_caption("SNAKE GAME")
 clock = pygame.time.Clock()
 
 block = 10
-speed = 20
+speed = 15
 
 font = pygame.font.SysFont("bahnschrift", 17)
 score_font = pygame.font.SysFont("comicsansms", 15)
 
 def your_score(score):
-    value = score_font.render( "Score:" + str(score), True, black)
+    value = score_font.render( "Score:" + str(score), True, yellow)
     display.blit(value, [0, 0])
 
 def snake(block, snake_list):
-    for x in snake_list:
-        pygame.draw.circle(display, black, [x[0], x[1], block, block]) 
+    for a in snake_list:
+        pygame.draw.circle(display, white, (a[0] + block / 2, a[1] + block / 2), block / 2)
 
 def message(msg, color):
     mesg = font.render(msg, True, color)
@@ -54,8 +54,8 @@ def gameLoop():
 
     while not game_over :
         while game_close == True:
-            display.fill(blue)
-            message("GAME OVER \n " + "Press C to play again \n" + "Press Q to quit", black)
+            display.fill(red)
+            message("GAME OVER  " + "(Press R to play again " + "Press Q to quit)", white)
             your_score(snake_length - 1 )
             pygame.display.update()
 
@@ -64,7 +64,7 @@ def gameLoop():
                     if event.key == pygame.K_q:
                         game_over = True
                         game_close = False
-                    if event.key == pygame.K_c:
+                    if event.key == pygame.K_r:
                         gameLoop()
 
         for event in pygame.event.get():
@@ -88,7 +88,7 @@ def gameLoop():
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        display.fill(blue)
+        display.fill(black)
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 255)
         pygame.draw.rect(display, color, [food_x, food_y, block, block])
         snake_head = [x1, y1]
