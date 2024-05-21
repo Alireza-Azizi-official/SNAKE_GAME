@@ -37,6 +37,8 @@ def message(msg, color):
     display.blit(mesg, [width / 6, height / 3])
 
 def gameLoop():
+    global speed  # Declare the global variable here
+
     game_over = False
     game_close = False
 
@@ -48,6 +50,7 @@ def gameLoop():
 
     snake_list = []
     snake_length = 1
+    food_eaten = 0
 
     food_x =  round(random.randrange(0, width - block) / 10.0) * 10.0
     food_y =  round(random.randrange(0, height - block) / 10.0) * 10.0
@@ -111,6 +114,15 @@ def gameLoop():
             food_x = round(random.randrange(0, width - block) / 10.0) * 10.0
             food_y = round(random.randrange(0, height - block)/ 10.0) * 10.0
             snake_length += 1
+
+        if x1 == food_x and y1 == food_y:
+            food_x = round(random.randrange(0, width - block) / 10.0) * 10.0
+            food_y = round(random.randrange(0, height - block)/ 10.0) * 10.0
+            snake_length += 1
+            food_eaten += 1
+            if food_eaten % 2 == 0:
+                speed += 5
+
         clock.tick(speed)
 
     pygame.quit()
