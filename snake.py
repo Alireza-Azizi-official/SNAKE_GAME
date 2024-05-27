@@ -19,7 +19,7 @@ pygame.display.set_caption("SNAKE GAME")
 clock = pygame.time.Clock()
 
 block = 10
-speed = 15
+speed = 10
 
 font = pygame.font.SysFont("bahnschrift", 17)
 score_font = pygame.font.SysFont("comicsansms", 15)
@@ -37,7 +37,7 @@ def message(msg, color):
     display.blit(mesg, [width / 6, height / 3])
 
 def gameLoop():
-    global speed  # Declare the global variable here
+    global speed 
 
     game_over = False
     game_close = False
@@ -54,7 +54,14 @@ def gameLoop():
 
     food_x =  round(random.randrange(0, width - block) / 10.0) * 10.0
     food_y =  round(random.randrange(0, height - block) / 10.0) * 10.0
-
+    
+    obstacles = []
+    for i in range(1):
+        obstacle_x = round(random.randrange(0, width - block) / 10.0) * 10.0
+        obstacles_y = round(random.randrange(0, height - block) / 10.0) * 10.0
+        obstacles.append([obstacle_x, obstacles_y])
+        
+        
     while not game_over :
         while game_close == True:
             display.fill(red)
@@ -102,6 +109,11 @@ def gameLoop():
         for x in snake_list[:-1]:
             if x == snake_head:
                 game_close = True
+                
+        for obstacle in obstacles:
+            pygame.draw.rect(display, red, [obstacle[0], obstacle[1], block, block])
+            if snake_head[0] == obstacle[0] and snake_head[1] == obstacle[1]:
+                game_close = True
 
         snake_list.append(snake_head)
 
@@ -114,15 +126,8 @@ def gameLoop():
             food_x = round(random.randrange(0, width - block) / 10.0) * 10.0
             food_y = round(random.randrange(0, height - block)/ 10.0) * 10.0
             snake_length += 1
-
-        if x1 == food_x and y1 == food_y:
-            food_x = round(random.randrange(0, width - block) / 10.0) * 10.0
-            food_y = round(random.randrange(0, height - block)/ 10.0) * 10.0
-            snake_length += 1
-            food_eaten += 1
-            if food_eaten % 2 == 0:
-                speed += 5
-
+            speed += 5  # Increase speed by 5
+            
         clock.tick(speed)
 
     pygame.quit()
